@@ -11,28 +11,40 @@ def newFile():
     print("New File Made")
 
 def openFile():
-    f = filedialog.askopenfile(mode="r")
-    t = f.read()
-    text.delete(0.0,END)
-    text.insert(0.0,t)
-    print("Nothing....")
+    global filename
+    filename = filedialog.askopenfilename(defaultextension=".txt", filetypes=[("All Files","*.*"),("Text Files","*.txt")])
+    if filename == " ":
+        filename = None
+    else:
+        f = open(filename,"r")
+        t = f.read()
+        text.delete(0.0,END)
+        text.insert(0.0,t)
+        print("File Opened")
 
 def saveFile():
     global filename
-    t = text.get(0.0, END)
-    f = open(filename, "w")
-    f.write(t)
-    f.close()
-    print("Nothing....")
+    try:
+        f = open(filename, "w")
+        t = text.get(0.0, END)
+        f.write(t)
+        f.close()
+        print("File Saved")
+    except:
+        saveasFile()
 
 def saveasFile():
-    f = filedialog.asksaveasfile(mode="w",defaultextension=".txt")
+    f = filedialog.asksaveasfilename(initialfile="Untitled.txt", defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Files","*.txt")])
     t = text.get(0.0, END)
     try:
-        f.write(t.rstrip())
+        fh = open(f,"w")
+        fh.write(t.rstrip())
+        fh.close()
+        print("File Saved")
     except:
         messagebox.showerror(title="Oops!", message="Unable to save the file...")
-    print("Nothing....")
+        print("Unable to Save.")
+
 
 def exitEditor():
     exit()
@@ -55,17 +67,13 @@ root.config(menu=menubar)
 
 #creating file menu
 file_menu=Menu(menubar)
-file_menu.add_command(label="New", accelerator='Ctrl+N', command=newFile)
-file_menu.add_command(label="Open", accelerator='Ctrl+O', command=openFile)
-file_menu.add_command(label="Save", accelerator='Ctrl+S', command=saveFile)
-file_menu.add_command(label="Save As", accelerator='Ctrl+Shift+N', command=saveasFile)
+file_menu.add_command(label="New", command=newFile)
+file_menu.add_command(label="Open", command=openFile)
+file_menu.add_command(label="Save", command=saveFile)
+file_menu.add_command(label="Save As", command=saveasFile)
 file_menu.add_separator()
 file_menu.add_command(label="Exit", command=exitEditor)
 menubar.add_cascade(label="File",menu=file_menu)
-
-root.bind('<Control_L><N>', lambda event: newFile())
-root.bind('<Control_L><o>', lambda event: openFile())
-root.bind('<Control_L><s>', lambda event: saveFile())
 
 #creating help menu
 help_menu=Menu(menubar)
