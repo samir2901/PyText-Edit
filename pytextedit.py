@@ -1,29 +1,37 @@
-from sys import *
-import os
 from tkinter import *
 from tkinter import filedialog
+from tkinter import messagebox
 
 filename = None
 
 def newFile():
-    print("Nothing....")
+    global filename
+    filename = "Untitled"
+    text.delete(0.0, END)
+    print("New File Made")
 
 def openFile():
-    global filename
-    filename = filedialog.askopenfile(initialdir="/", title="Open", filetype=((("Text Files"),".txt"),(("All Files"),"*.*")))
-    if filename == " ":
-        filename = None
-    else:
-        root.title("PyText Edit-"+str(os.path.basename(filename)))
-        text.delete(1.0,END)
-        fp = open(filename,"r")
-        text.insert(1.0,fp.read())
-        fp.close()
+    f = filedialog.askopenfile(mode="r")
+    t = f.read()
+    text.delete(0.0,END)
+    text.insert(0.0,t)
+    print("Nothing....")
 
 def saveFile():
+    global filename
+    t = text.get(0.0, END)
+    f = open(filename, "w")
+    f.write(t)
+    f.close()
     print("Nothing....")
 
 def saveasFile():
+    f = filedialog.asksaveasfile(mode="w",defaultextension=".txt")
+    t = text.get(0.0, END)
+    try:
+        f.write(t.rstrip())
+    except:
+        messagebox.showerror(title="Oops!", message="Unable to save the file...")
     print("Nothing....")
 
 def exitEditor():
@@ -68,9 +76,10 @@ menubar.add_cascade(label="Help", menu=help_menu)
 
 text=Text(root)
 text.pack(expand=True, fill=BOTH)
-scrollbar = Scrollbar(text)
-text.configure(yscrollcommand=scrollbar.set)
-scrollbar.config(command=text.yview)
-scrollbar.pack(side=RIGHT, fill=Y)
+
+scrollbar_y = Scrollbar(text)
+text.configure(yscrollcommand=scrollbar_y.set)
+scrollbar_y.config(command=text.yview)
+scrollbar_y.pack(side=RIGHT, fill=Y)
 
 root.mainloop()
