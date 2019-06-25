@@ -51,15 +51,25 @@ def exitEditor():
 
 
 def viewHelp():
-    print("Nothing....")
+    helpWindow=Toplevel()
+    helpWindow.title("Help-PyText Edit")
+    helpWindow.geometry("300x300")
+    helpWindow.iconbitmap("Help Logo.ico")
+    print("Help Window Opened")
 
 def viewAbout():
-    print("Nothing....")
+    aboutWindow=Toplevel()
+    aboutWindow.title("About-PyText Edit")
+    aboutWindow.geometry("300x300")
+    aboutWindow.iconbitmap("About Logo.ico")
+    print("About Window Opened")
+
 
 #creating main window
 root = Tk()
 root.title("PyText Edit")
-root.geometry("540x560")
+root.iconbitmap("PyText Edit Logo.ico")
+root.geometry("540x560+1000+500")
 
 #creating menu bar
 menubar=Menu(root)
