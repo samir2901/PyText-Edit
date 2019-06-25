@@ -57,7 +57,6 @@ def viewHelp():
     helpWindow=Toplevel()
     helpWindow.title("Help-PyText Edit")
     helpWindow.geometry("300x110")
-    helpWindow.iconbitmap("Help Logo.ico")
     helpWindow.config(background="yellow")
     helpLabel = Label(helpWindow,text="Help", font=("Britannic Bold", 20), bg="yellow").pack()
     details_help = Label(helpWindow,
@@ -71,7 +70,6 @@ def viewAbout():
     aboutWindow=Toplevel()
     aboutWindow.title("About-PyText Edit")
     aboutWindow.geometry("300x190")
-    aboutWindow.iconbitmap("About Logo.ico")
     aboutWindow.config(background="yellow")
     aboutLabel = Label(aboutWindow,text="About", font=("Britannic Bold", 20), bg="yellow").pack()
     details1_about = Label(aboutWindow,
@@ -90,8 +88,7 @@ def viewAbout():
 #creating main window
 root = Tk()
 root.title("PyText Edit")
-root.iconbitmap("PyText Edit Logo.ico")
-root.geometry("540x560+1000+500")
+root.geometry("540x560")
 
 #creating menu bar
 menubar=Menu(root)
